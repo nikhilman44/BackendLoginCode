@@ -56,26 +56,10 @@ app.post('/login', (req, res) => {
 });
 
 // Protected route example
-app.get('/me', (req, res) => {
-  const token = req.headers['x-access-token'];
-  if (!token) {
-    return res.status(401).send('No token provided');
-  }
-
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(500).send('Failed to authenticate token');
-    }
-
-    const query = `SELECT * FROM users WHERE id = ?`;
-    db.get(query, [decoded.id], (err, user) => {
-      if (err || !user) {
-        return res.status(404).send('User not found');
-      }
-
-      res.status(200).send(user);
-    });
-  });
+app.get('/me', async (req, res) => {
+    const query = `SELECT * FROM users`;
+    const myData = await db.get(query)
+    res.send(myData);
 });
 
 app.listen(PORT, () => {
