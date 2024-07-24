@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const SECRET_KEY = 'your_secret_key'; // Replace with a secure secret key
+const SECRET_KEY = 'testy_kitchen_key'; 
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.post('/register', (req, res) => {
     if (err) {
       return res.status(500).send('User already exists');
     }
-    const token = jwt.sign({ id: this.lastID }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: this.lastID }, SECRET_KEY, { expiresIn: '30h' });
     res.status(201).send({ auth: true, token });
   });
 });
@@ -50,7 +50,7 @@ app.post('/login', (req, res) => {
       return res.status(401).send('Invalid password');
     }
 
-    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: '30h' });
     res.status(200).send({ auth: true, token });
   });
 });
