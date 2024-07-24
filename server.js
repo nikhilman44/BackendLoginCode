@@ -59,6 +59,7 @@ app.post('/login', (req, res) => {
 app.get('/me', async (req, res) => {
     const query = `SELECT * FROM users`;
     const myData = await db.get(query)
+    console.log(myData)
     res.send(myData);
 });
 
